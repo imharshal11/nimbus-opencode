@@ -1,13 +1,14 @@
 "use client";
 
-import { forwardRef, useRef, useImperativeHandle, type RefObject } from "react";
+import { forwardRef, useRef, useImperativeHandle } from "react";
 
 interface SearchInputProps {
   onSearch: (city: string) => void;
   onClear: () => void;
+  onChange: (value: string) => void;
   disabled?: boolean;
   placeholder?: string;
-  value?: string;
+  value: string;
 }
 
 interface SearchInputRef {
@@ -15,7 +16,7 @@ interface SearchInputRef {
 }
 
 export const SearchInput = forwardRef<SearchInputRef, SearchInputProps>(
-  ({ onSearch, onClear, disabled, placeholder = "Enter a city name", value }, ref) => {
+  ({ onSearch, onClear, onChange, disabled, placeholder = "Enter a city name", value }, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useImperativeHandle(ref, () => ({
@@ -24,18 +25,15 @@ export const SearchInput = forwardRef<SearchInputRef, SearchInputProps>(
 
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
-      const input = inputRef.current;
-      if (input && input.value.trim()) {
-        onSearch(input.value);
+      if (value.trim()) {
+        onSearch(value.trim());
       }
     };
 
     const handleClear = () => {
-      if (inputRef.current) {
-        inputRef.current.value = "";
-        inputRef.current.focus();
-      }
+      onChange("");
       onClear();
+      inputRef.current?.focus();
     };
 
     return (
@@ -46,16 +44,12 @@ export const SearchInput = forwardRef<SearchInputRef, SearchInputProps>(
         <input
           ref={inputRef}
           id="city-search"
-          type="search"
+          type="text"
           value={value}
-          onChange={(e) => {
-            if (e.target.value !== value) {
-              // Allow controlled/uncontrolled hybrid
-            }
-          }}
+          onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           disabled={disabled}
-          className="w-full px-4 py-3 pr-12 text-base border border-slate-300 rounded-lg bg-white placeholder-slate-400 focus:border-accent focus:ring-2 focus:ring-accent/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full px-4 py-3 pr-20 text-base border border-slate-300 rounded-lg bg-white placeholder-slate-400 focus:border-accent focus:ring-2 focus:ring-accent/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           autoComplete="off"
           spellCheck={false}
         />
@@ -64,7 +58,7 @@ export const SearchInput = forwardRef<SearchInputRef, SearchInputProps>(
             type="button"
             onClick={handleClear}
             disabled={disabled}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 focus:text-slate-900 transition-colors disabled:opacity-50"
+            className="absolute right-11 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 focus:text-slate-900 transition-colors disabled:opacity-50"
             aria-label="Clear search"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -74,7 +68,7 @@ export const SearchInput = forwardRef<SearchInputRef, SearchInputProps>(
         )}
         <button
           type="submit"
-          disabled={disabled || !value?.trim()}
+          disabled={disabled || !value.trim()}
           className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-accent focus:text-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Search"
         >

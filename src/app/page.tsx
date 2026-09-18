@@ -15,6 +15,7 @@ export default function Home() {
   const [data, setData] = useState<WeatherResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeCity, setActiveCity] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
   const [inspectorOpen, setInspectorOpen] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -32,6 +33,11 @@ export default function Home() {
       const response = await fetch(`/api/weather?city=${encodeURIComponent(city)}`, {
         signal: abortControllerRef.current.signal,
       });
+
+      if (response.status === 404) {
+        setState("empty");
+        return;
+      }
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -64,6 +70,7 @@ export default function Home() {
   }, [activeCity, fetchWeather]);
 
   const handleChipSelect = useCallback((city: string) => {
+    setQuery(city);
     fetchWeather(city);
   }, [fetchWeather]);
 
@@ -71,6 +78,7 @@ export default function Home() {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
+    setQuery("");
     setState("idle");
     setData(null);
     setError(null);
@@ -103,9 +111,10 @@ export default function Home() {
           <SearchInput
             onSearch={handleSearch}
             onClear={handleClear}
+            onChange={setQuery}
             disabled={state === "loading"}
             placeholder="Enter a city name"
-            value={activeCity ?? ""}
+            value={query}
           />
 
           <CityChips
