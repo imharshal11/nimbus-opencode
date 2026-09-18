@@ -22,6 +22,14 @@ temperature, humidity and wind, and gives you one word — Pleasant, Hot,
 Cold, Windy or Uncomfortable — then colours the whole screen to match.
 You can tell what kind of day it is from across the room.
 
+![London — Cold](docs/london-cold.png)
+
+![Mumbai — Uncomfortable](docs/mumbai-uncomfortable.png)
+
+![San Francisco — Pleasant](docs/sanfrancisco-pleasant.png)
+
+Same app, three cities. You know which is which before reading anything.
+
 ---
 
 ## Keeping the API key safe
