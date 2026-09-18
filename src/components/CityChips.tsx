@@ -18,14 +18,14 @@ export function CityChips({ cities, activeCity, onSelect, disabled }: CityChipsP
           type="button"
           onClick={() => onSelect(city)}
           disabled={disabled}
-          className={`inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-full border transition-all ${
+          className={`inline-flex items-center px-3 py-1.5 rounded-full border transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-current)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent ${
             activeCity === city
-              ? "bg-accent text-accent-foreground border-accent shadow-sm"
-              : "bg-white text-slate-700 border-slate-300 hover:border-accent hover:text-accent focus:border-accent focus:ring-2 focus:ring-accent/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              ? "border-[var(--accent-current)] text-[var(--accent-current)] bg-transparent"
+              : "border-white/12 text-white/80 hover:border-white/30 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
           }`}
           aria-pressed={activeCity === city}
         >
-          {city}
+          <span className="text-chip">{city}</span>
         </button>
       ))}
     </div>

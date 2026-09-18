@@ -3,14 +3,57 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 15, 23, 42;
-  --background-rgb: 248, 250, 252;
+  --font-sans: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Mood gradients (top → bottom) */
+  --mood-idle: linear-gradient(180deg, #0F1115 0%, #16181D 100%);
+  --mood-pleasant: linear-gradient(180deg, #1B2A22 0%, #0F1A15 100%);
+  --mood-hot: linear-gradient(180deg, #2E1D12 0%, #1A1009 100%);
+  --mood-cold: linear-gradient(180deg, #14202E 0%, #0B1520 100%);
+  --mood-windy: linear-gradient(180deg, #1C222B 0%, #10151C 100%);
+  --mood-uncomfortable: linear-gradient(180deg, #2B1A22 0%, #180E13 100%);
+
+  /* Mood text colors */
+  --text-idle: #E8EAED;
+  --text-pleasant: #E4F0E9;
+  --text-hot: #F5E6D8;
+  --text-cold: #DCE8F5;
+  --text-windy: #DFE5EC;
+  --text-uncomfortable: #F0DDE6;
+
+  /* Mood accents */
+  --accent-idle: #7C8794;
+  --accent-pleasant: #5FD39A;
+  --accent-hot: #F0A35E;
+  --accent-cold: #6BAEE8;
+  --accent-windy: #9BB0C4;
+  --accent-uncomfortable: #E07A9F;
+
+  /* Base spacing scale */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    --gradient-transition: none;
+  }
+}
+
+html {
+  --gradient-transition: background 600ms ease;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans);
+  background: var(--mood-idle);
+  color: var(--text-idle);
+  transition: var(--gradient-transition);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -18,7 +61,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid #0ea5e9;
+  outline: 2px solid var(--accent-current, #0ea5e9);
   outline-offset: 2px;
 }
 
@@ -26,4 +69,11 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  .bg-mood-idle { background: var(--mood-idle); color: var(--text-idle); --accent-current: var(--accent-idle); }
+  .bg-mood-pleasant { background: var(--mood-pleasant); color: var(--text-pleasant); --accent-current: var(--accent-pleasant); }
+  .bg-mood-hot { background: var(--mood-hot); color: var(--text-hot); --accent-current: var(--accent-hot); }
+  .bg-mood-cold { background: var(--mood-cold); color: var(--text-cold); --accent-current: var(--accent-cold); }
+  .bg-mood-windy { background: var(--mood-windy); color: var(--text-windy); --accent-current: var(--accent-windy); }
+  .bg-mood-uncomfortable { background: var(--mood-uncomfortable); color: var(--text-uncomfortable); --accent-current: var(--accent-uncomfortable); }
 }

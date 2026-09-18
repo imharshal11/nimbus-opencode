@@ -49,7 +49,7 @@ export const SearchInput = forwardRef<SearchInputRef, SearchInputProps>(
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           disabled={disabled}
-          className="w-full px-4 py-3 pr-20 text-base border border-slate-300 rounded-lg bg-white placeholder-slate-400 focus:border-accent focus:ring-2 focus:ring-accent/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full px-4 py-3 pr-20 text-base text-inherit border border-white/15 rounded-input bg-transparent placeholder-opacity-35 focus:border-[var(--accent-current)] focus:ring-0 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
           autoComplete="off"
           spellCheck={false}
         />
@@ -58,7 +58,7 @@ export const SearchInput = forwardRef<SearchInputRef, SearchInputProps>(
             type="button"
             onClick={handleClear}
             disabled={disabled}
-            className="absolute right-11 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 focus:text-slate-900 transition-colors disabled:opacity-50"
+            className="absolute right-11 top-1/2 -translate-y-1/2 p-1 text-white/60 hover:text-white focus:text-white transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-current)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded"
             aria-label="Clear search"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -69,7 +69,7 @@ export const SearchInput = forwardRef<SearchInputRef, SearchInputProps>(
         <button
           type="submit"
           disabled={disabled || !value.trim()}
-          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-accent focus:text-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-white/60 hover:text-white focus:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-current)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded"
           aria-label="Search"
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">

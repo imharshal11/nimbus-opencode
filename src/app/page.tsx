@@ -9,6 +9,16 @@ import { ResponseInspector } from "@/components/ResponseInspector";
 import { ErrorState } from "@/components/ErrorState";
 import { LoadingSkeleton } from "@/components/LoadingSkeleton";
 import type { WeatherResponse, WeatherState } from "@/lib/types";
+import { getWeatherMood } from "@/lib/weather-mood";
+
+const MOOD_CLASS_MAP: Record<string, string> = {
+  idle: "bg-mood-idle",
+  Pleasant: "bg-mood-pleasant",
+  Hot: "bg-mood-hot",
+  Cold: "bg-mood-cold",
+  Windy: "bg-mood-windy",
+  Uncomfortable: "bg-mood-uncomfortable",
+};
 
 export default function Home() {
   const [state, setState] = useState<WeatherState>("idle");
@@ -18,6 +28,14 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [inspectorOpen, setInspectorOpen] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  const currentMood = data ? getWeatherMood({
+    temp_c: data.current.temp_c,
+    humidity: data.current.humidity,
+    wind_kph: data.current.wind_kph,
+  }) : "idle";
+
+  const moodClass = MOOD_CLASS_MAP[currentMood] ?? "bg-mood-idle";
 
   const fetchWeather = useCallback(async (city: string) => {
     if (abortControllerRef.current) {
@@ -94,20 +112,16 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="border-b border-slate-200 bg-white px-4 py-6 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          <h1 className="text-3xl font-semibold text-slate-900 tracking-tight">
-            Nimbus
-          </h1>
-          <p className="mt-1 text-slate-600 text-sm sm:text-base">
-            Current conditions, read at a glance.
-          </p>
+    <div className={`min-h-screen flex flex-col ${moodClass} transition-colors duration-600 ease-out`}>
+      <header className="px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-content">
+          <h1 className="text-2xl sm:text-[20px] font-semibold tracking-tight">Nimbus</h1>
+          <p className="mt-1 text-[13px] opacity-50">Current conditions, read at a glance.</p>
         </div>
       </header>
 
       <main className="flex-1 flex flex-col px-4 py-6 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl w-full space-y-6">
+        <div className="mx-auto max-w-content w-full space-y-4 sm:space-y-6">
           <SearchInput
             onSearch={handleSearch}
             onClear={handleClear}
@@ -139,8 +153,8 @@ export default function Home() {
             )}
 
             {state === "idle" && (
-              <div className="text-center py-12 text-slate-500">
-                <p className="text-lg">Enter a city or tap a chip to begin.</p>
+              <div className="text-center py-12 opacity-70">
+                <p className="text-body">Enter a city or tap a chip to begin.</p>
               </div>
             )}
 
@@ -163,8 +177,8 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="border-t border-slate-200 bg-white px-4 py-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center text-xs text-slate-400">
+      <footer className="px-4 py-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-content text-center text-footer opacity-40">
           Built by Harshal S
         </div>
       </footer>

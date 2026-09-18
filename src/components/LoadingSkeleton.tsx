@@ -2,20 +2,25 @@
 
 export function LoadingSkeleton() {
   return (
-    <article className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm animate-pulse" aria-busy="true" aria-label="Loading weather data">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
-        <div>
-          <div className="h-6 w-48 bg-slate-200 rounded" />
-          <div className="mt-2 h-4 w-32 bg-slate-200 rounded" />
-        </div>
-        <div className="h-8 w-28 bg-slate-200 rounded-full" />
+    <article className="space-y-6" aria-busy="true" aria-label="Loading weather data">
+      <header className="text-center space-y-2">
+        <div className="h-7 w-48 mx-auto bg-white/10 rounded animate-pulse" style={{ animationDuration: '1.4s' }} />
+        <div className="h-4 w-32 mx-auto bg-white/10 rounded animate-pulse" style={{ animationDuration: '1.4s', animationDelay: '0.2s' }} />
+      </header>
+
+      <div className="text-center space-y-1">
+        <div className="h-[96px] w-24 mx-auto bg-white/10 rounded animate-pulse" style={{ animationDuration: '1.4s', animationDelay: '0.4s' }} />
+        <div className="h-4 w-20 mx-auto bg-white/10 rounded animate-pulse" style={{ animationDuration: '1.4s', animationDelay: '0.6s' }} />
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="flex flex-col items-center text-center p-4 rounded-lg bg-slate-50">
-            <div className="w-6 h-6 bg-slate-200 rounded mb-2" />
-            <div className="h-8 w-16 bg-slate-200 rounded mb-1" />
-            <div className="h-3 w-20 bg-slate-200 rounded" />
+
+      <div className="grid grid-cols-3 gap-4">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="flex flex-col items-center text-center relative">
+            <div className="h-10 w-20 mx-auto bg-white/10 rounded animate-pulse" style={{ animationDuration: '1.4s', animationDelay: `${0.8 + i * 0.1}s` }} />
+            <div className="h-3 w-16 mx-auto mt-2 bg-white/10 rounded animate-pulse" style={{ animationDuration: '1.4s', animationDelay: `${1.0 + i * 0.1}s` }} />
+            {i < 3 && (
+              <div className="absolute right-0 top-1/3 bottom-1/3 w-px bg-white/10" aria-hidden="true" />
+            )}
           </div>
         ))}
       </div>

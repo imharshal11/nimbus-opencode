@@ -1,8 +1,8 @@
 export const MOOD_THRESHOLDS = {
-  windy: { wind_kph: 30 },
-  uncomfortable: { temp_c: 28, humidity: 70 },
-  hot: { temp_c: 35 },
-  cold: { temp_c: 10 },
+  windy: { wind_kph: 25 },
+  uncomfortable: { temp_c: 26, humidity: 65 },
+  hot: { temp_c: 30 },
+  cold: { temp_c: 15 },
 } as const;
 
 export type MoodLabel =
@@ -44,11 +44,11 @@ export function getWeatherMood(input: WeatherMoodInput): MoodLabel {
 }
 
 export const MOOD_COLORS: Record<MoodLabel, string> = {
-  Windy: "#f59e0b",
-  Uncomfortable: "#ef4444",
-  Hot: "#f97316",
-  Cold: "#3b82f6",
-  Pleasant: "#22c55e",
+  Windy: "#9BB0C4",
+  Uncomfortable: "#E07A9F",
+  Hot: "#F0A35E",
+  Cold: "#6BAEE8",
+  Pleasant: "#5FD39A",
 };
 
 export const MOOD_LABELS: Record<MoodLabel, string> = {
